@@ -12,11 +12,13 @@ public class Person {
 	private int wealth;
 	
 	private final int LIFEEXPECTANCY;
+	private final int METABOLISM;
+	private final int VISION;
 	
-	public Person(int lifeExpectancy) {
+	public Person() {
 		this.age = 0;
-		this.wealth = 0;
-		this.LIFEEXPECTANCY = lifeExpectancy;
+		this.LIFEEXPECTANCY = Params.randomMetabolism();
+		
 	}
 
 }

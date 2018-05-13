@@ -10,53 +10,48 @@ import java.util.Random;
 public class Params {
 	
 	// number of people on the land - range from 2-1000
-	public final int NUM_PEOPLE;
+	public final static int NUM_PEOPLE = 2;
 
 	// max-vision of people - how far they can see
 	// 4 directions instead of 8
-	// range from  1-15
-	public final int MAX_VISION;
+	// range from 1-15
+	public final static int MAX_VISION = 3;
 	
 	// max metabolism of people - the number of grain they eat at each tick
-	public final int METABOLISM_MAX;
+	// range from 1-25
+	public final static int METABOLISM_MAX = 5;
 	
 	// max life expectancy - the number of ticks one person can live
-	public final int LIFE_EXPECTANCY_MAX;
+	// range from 1-100
+	public final static int LIFE_EXPECTANCY_MAX = 100;
 	
 	// min life expectancy
-	public final int LIFE_EXPECTANCY_MIN;
+	// range from 1-100
+	public final static int LIFE_EXPECTANCY_MIN = 1;
 	
 	// percentage of best land - land that has 
-	public final double PERCENT_BEST_LAND;
+	// range from 5%-25%
+	public final static double PERCENT_BEST_LAND = 0.05;
 	
 	// the maximum number of grains a patch can hold
-	public static final int MAX_GRAIN = 50;
+	public final static int MAX_GRAIN = 50;
 	
 	// grain growth interval (measured in the number of ticks)
-	public final int GRAIN_GROWTH_INTERVAL;
+	// range from 1-10
+	public final static int GRAIN_GROWTH_INTERVAL = 10;
 	
 	// number of grain grown after every interval
-	public final int NUM_GRAIN_GROWN;
+	// range from 1-10
+	public final int NUM_GRAIN_GROWN = 10;
 	
 	
-	public Params(int num_people, int max_vision, int metabolism_max,
-			int life_expectancy_max, int life_expectancy_min, 
-			double percent_best_land, int grain_growth_interval, 
-			int num_grain_grown) {
-		this.NUM_PEOPLE = num_people;
-		this.MAX_VISION = max_vision;
-		this.METABOLISM_MAX = metabolism_max;
-		this.LIFE_EXPECTANCY_MAX = life_expectancy_max;
-		this.LIFE_EXPECTANCY_MIN = life_expectancy_min;
-		this.PERCENT_BEST_LAND = percent_best_land;
-		this.GRAIN_GROWTH_INTERVAL = grain_growth_interval;
-		this.NUM_GRAIN_GROWN = num_grain_grown;
+	public Params() {
 	}
 	
 	/*
 	 * Get a random vision ranging from 1 to MAX_VISION (inclusive)
 	 */
-	public int randomVision() {
+	public static int randomVision() {
 		Random random = new Random();
 		return 1 + random.nextInt(MAX_VISION);
 	}
@@ -64,7 +59,7 @@ public class Params {
 	/*
 	 * Get a random metabolism ranging from 1 to METABOLISM_MAX (inclusive)
 	 */
-	public int randomMetabolism() {
+	public static int randomMetabolism() {
 		Random random = new Random();
 		return 1 + random.nextInt(METABOLISM_MAX);
 	}
@@ -73,7 +68,7 @@ public class Params {
 	 * Get a random initial wealth ranging from metabolism to 
 	 * metabolism + 50 (inclusive)
 	 */
-	public int randomWealth(int metabolism) {
+	public static int randomWealth(int metabolism) {
 		Random random = new Random();
 		return metabolism + random.nextInt(50);
 	}
@@ -82,7 +77,7 @@ public class Params {
 	 * Get a random life expectancy ranging from LIFE_EXPECTANCY_MIN to 
 	 * LIFE_EXPECTANCY_MAX (inclusive)
 	 */
-	public int randomLifeExpectancy() {
+	public static int randomLifeExpectancy() {
 		Random random = new Random();
 		return LIFE_EXPECTANCY_MIN + random.nextInt(LIFE_EXPECTANCY_MAX - 
 				LIFE_EXPECTANCY_MIN);
