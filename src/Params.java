@@ -42,7 +42,10 @@ public class Params {
 	
 	// number of grain grown after every interval
 	// range from 1-10
-	public final int NUM_GRAIN_GROWN = 10;
+	public final static int NUM_GRAIN_GROWN = 10;
+	
+	// size of the land
+	public final static int LAND_SIZE = 50;
 	
 	
 	public Params() {
