@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Random;
 
 /**
@@ -84,6 +86,26 @@ public class Params {
 		Random random = new Random();
 		return LIFE_EXPECTANCY_MIN + random.nextInt(LIFE_EXPECTANCY_MAX - 
 				LIFE_EXPECTANCY_MIN);
+	}
+	
+	/*
+	 * Get the random coordinates for best lands
+	 */
+	public static Hashtable<Integer, Tuple> randomBestLand() {
+		Hashtable<Integer, Tuple> bestLands = new Hashtable<Integer, Tuple>();
+		int index = 0;
+		while(index < (int)(LAND_SIZE * LAND_SIZE * PERCENT_BEST_LAND)) {
+			Random random = new Random();
+			Tuple t = new Tuple(random.nextInt(LAND_SIZE),
+					random.nextInt(LAND_SIZE));
+			while(bestLands.contains(t)){
+				t = new Tuple(random.nextInt(LAND_SIZE),
+						random.nextInt(LAND_SIZE));
+			}
+			bestLands.put(index, t);
+			index++;
+		}
+		return bestLands;
 	}
 	
 

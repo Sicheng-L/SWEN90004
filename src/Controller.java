@@ -19,6 +19,13 @@ public class Controller {
 	}
 	
 	/*
+	 * setup patches at the first tick
+	 */
+	private void setupPatches(){
+		
+	}
+	
+	/*
 	 * Move the people to the adjacent block according to the 
 	 * judgement of their own
 	 * 
@@ -50,14 +57,28 @@ public class Controller {
 	 * in the lands that they are standing on
 	 */
 	private void personHarvest(){
-		
+		for(int i = 0; i < Params.LAND_SIZE; i++) {
+			for(int j = 0; j < Params.LAND_SIZE; j++) {
+				ArrayList<Person> people = personLand.getValue(i, j);
+				int averageGrain = patchLand.getValue(i, j).getCurrentGrain() 
+						/ people.size();
+				for(int k = 0; k < people.size(); k++) {
+					people.get(k).setWealth(
+							people.get(k).getWealth() + averageGrain);;
+				}
+			}
+		}
 	}
 	
 	/*
 	 * Grow grains of each land
 	 */
 	private void growGrain(){
-		
+		for(int i = 0; i < Params.LAND_SIZE; i++) {
+			for(int j = 0; j < Params.LAND_SIZE; j++) {
+				patchLand.getValue(i, j).growGrain();
+			}
+		}
 	}
 	
 	
@@ -67,5 +88,11 @@ public class Controller {
 	public void tick(){
 		
 	}
-
+	
+	/*
+	 * Actions for the first tick
+	 */
+	public void firstTick(){
+		
+	}
 }

@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class Land<T> extends Hashtable<Tuple, T>{
 	
 	public Land() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public T getValue(int x, int y){
