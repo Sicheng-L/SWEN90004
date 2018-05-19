@@ -28,6 +28,8 @@ public class Controller {
 		Set<Integer> keys = bestLands.keySet();
         for(Integer key : keys){
             patchLand.getValue(bestLands.get(key).getX(),
+            		bestLands.get(key).getY()).setMaxGrain(Params.MAX_GRAIN);
+            patchLand.getValue(bestLands.get(key).getX(),
             		bestLands.get(key).getY()).putGrain(Params.MAX_GRAIN);
         }
         
@@ -49,52 +51,50 @@ public class Controller {
 				// iterate through the whole ArrayList
 				for(int k = 0; k < people.size(); k++) {
 					// check blocks within the person's view
-					int bestNorth = 0, bestSouth = 0;
-					int bestEast = 0 , bestWest = 0;
+					int north = patchLand.getValue(i, j).getCurrentGrain(),
+						south = patchLand.getValue(i, j).getCurrentGrain(),
+						east = patchLand.getValue(i, j).getCurrentGrain() ,
+						west = patchLand.getValue(i, j).getCurrentGrain();
 					for(int t = 0; t < people.get(k).getView(); t++) {
 						// the block in the north
 						int grainNorth = 
 								patchLand
 								.getValue(i, (j + k) % Params.LAND_SIZE)
 								.getCurrentGrain();
-						bestNorth = bestNorth > grainNorth ?
-								bestNorth : grainNorth;
+						north += grainNorth;
 						// the block in the south
 						int grainSouth = 
 								patchLand
 								.getValue(i, (j - k + Params.LAND_SIZE) 
 										% Params.LAND_SIZE)
 								.getCurrentGrain();
-						bestSouth = bestSouth > grainSouth ?
-								bestSouth : grainSouth;
+						south += grainSouth;
 						// the block in the east
 						int grainEast = 
 								patchLand
 								.getValue((i + k) % Params.LAND_SIZE, j)
 								.getCurrentGrain();
-						bestEast = bestEast > grainEast ?
-								bestEast : grainEast;
+						east += grainEast;
 						// the block in the west
 						int grainWest = 
 								patchLand
 								.getValue((i - k + Params.LAND_SIZE) 
 										% Params.LAND_SIZE, j)
 								.getCurrentGrain();
-						bestWest = bestWest > grainWest ?
-								bestWest : grainWest;
+						west += grainWest; 
 					}
 					// check the best direction and move towards it
 					int best = 
-							findBest(bestNorth, bestSouth, bestEast, bestWest);
+							findBest(north, south, east, west);
 					// move towards the right direction
-					if(best == bestNorth) {
+					if(best == north) {
 						nextPersonLand.getValue(i, (j + 1) % Params.LAND_SIZE)
 						.add(people.get(k));	
-					} else if (best == bestSouth) {
+					} else if (best == south) {
 						nextPersonLand.getValue(i, (j - 1 + Params.LAND_SIZE)
 								% Params.LAND_SIZE)
 						.add(people.get(k));
-					} else if (best == bestEast) {
+					} else if (best == east) {
 						nextPersonLand.getValue((i + 1) % Params.LAND_SIZE, j)
 						.add(people.get(k));
 					} else {
@@ -110,21 +110,52 @@ public class Controller {
 	
 	/*
 	 * All people eats, age and possibly die (if they are dead, 
-	 * remove them from the land and add a new person at the same location)
+	 * add a new person at the same location)
 	 */
-	private void personEatAgeDie() {
+	private Land<ArrayList<Person>> personEatAgeDie() {
+		Land<ArrayList<Person>> nextPersonLand = Params.newPersonLand();
 		for(int i = 0; i < Params.LAND_SIZE; i++) {
 			for(int j = 0; j < Params.LAND_SIZE; j++) {
 				ArrayList<Person> people = personLand.getValue(i, j);
+				for(int k = 0; k < people.size(); k++) {
+					people.get(k).eat();
+					if(people.get(k).isDead()) {
+						nextPersonLand.getValue(i, j).add(new Person());
+					} else {
+						nextPersonLand.getValue(i, j).add(people.get(k));
+					}
+				}
 			}
 		}
+		return nextPersonLand;
 	}
 	
 	/*
 	 * Spread the grain when initializing the process
 	 */
-	private void spreadGrain() {
-		
+	private Land<Patch> spreadGrain() {
+		Land<Patch> newPatchLand = Params.newPatchLand();
+		for(int i = 0; i < Params.LAND_SIZE; i++) {
+			for(int j = 0; j < Params.LAND_SIZE; j++) {
+				// spread the grain on the best land
+				double averageDiffFirst = 0;
+				double averageDiffSecond = 0;
+				for(int k = 0 ; k < Params.FIRST_SPREAD; k++) {
+					Patch patch = patchLand.getValue(i, j);
+					if(patch.getMaxGrain() != 0) {
+						// spread the grain
+						patch.putGrain(patch.getMaxGrain());
+						averageDiffFirst +=
+								patch.getCurrentGrain() * Params.DIFF_RATE / 8;
+					}
+				}
+				
+				for(int k = 0; k < Params.FURTHER_SPREAD; k++) {
+					
+				}
+			}
+		}
+		return newPatchLand;
 	}
 	
 	/*
@@ -135,12 +166,15 @@ public class Controller {
 		for(int i = 0; i < Params.LAND_SIZE; i++) {
 			for(int j = 0; j < Params.LAND_SIZE; j++) {
 				ArrayList<Person> people = personLand.getValue(i, j);
-				int averageGrain = patchLand.getValue(i, j).getCurrentGrain() 
-						/ people.size();
+				int averageGrain = (int)Math.floor(
+						patchLand.getValue(i, j).getCurrentGrain() 
+						/ people.size());
 				for(int k = 0; k < people.size(); k++) {
 					people.get(k).setWealth(
 							people.get(k).getWealth() + averageGrain);;
 				}
+				patchLand.getValue(i, j)
+				.harvestGrain();
 			}
 		}
 	}
@@ -174,8 +208,15 @@ public class Controller {
 	/*
 	 * Change controlling personLand
 	 */
-	private void changeState(Land<ArrayList<Person>> personLand) {
+	private void changePersonLand(Land<ArrayList<Person>> personLand) {
 		this.personLand = personLand;
+	}
+	
+	/*
+	 * Change controlling patchland
+	 */
+	private void changePatchLand(Land<Patch> patchLand) {
+		this.patchLand = patchLand;
 	}
 	
 	/*

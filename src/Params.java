@@ -49,6 +49,14 @@ public class Params {
 	// size of the land
 	public final static int LAND_SIZE = 50;
 	
+	// number of first spread
+	public final static int FIRST_SPREAD = 5;
+	
+	// diffusion rate
+	public final static double DIFF_RATE = 0.25;
+	
+	// number of further spread
+	public final static int FURTHER_SPREAD = 10;
 	
 	public Params() {
 	}
@@ -121,5 +129,17 @@ public class Params {
 		return newPersonLand;
 	}
 	
-
+	/*
+	 * Get an empty patch land - representing the next state
+	 */
+	public static Land<Patch> newPatchLand() {
+		Land<Patch> newPatchLand = new Land<Patch>();
+		for(int i = 0; i < LAND_SIZE; i++) {
+			for(int j = 0; j < LAND_SIZE; j++) {
+				newPatchLand.putPair(i, j, new Patch());
+			}
+		}
+		return newPatchLand;
+	}
+	
 }

@@ -45,7 +45,7 @@ public class Patch {
 	 */
 	public void putGrain(int grain) {
 		currentGrain += grain;
-		if(currentGrain > MAX_GRAIN){
+		if(currentGrain > MAX_GRAIN) {
 			currentGrain = MAX_GRAIN;
 		}
 	}
@@ -56,8 +56,15 @@ public class Patch {
 	 */
 	public void growGrain(){
 		currentGrain += Params.NUM_GRAIN_GROWN;
-		if(currentGrain > MAX_GRAIN){
+		if(currentGrain > MAX_GRAIN) {
 			currentGrain = MAX_GRAIN;
 		}
+	}
+	
+	/*
+	 * Let people harvest grain
+	 */
+	public void harvestGrain() {
+		currentGrain = 0;
 	}
 }
