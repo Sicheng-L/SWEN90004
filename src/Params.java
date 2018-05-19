@@ -108,5 +108,18 @@ public class Params {
 		return bestLands;
 	}
 	
+	/*
+	 * Get an empty person land - representing the next state
+	 */
+	public static Land<ArrayList<Person>> newPersonLand() {
+		Land<ArrayList<Person>> newPersonLand = new Land<ArrayList<Person>>();
+		for(int i = 0; i < LAND_SIZE; i++) {
+			for(int j = 0; j < LAND_SIZE; j++) {
+				newPersonLand.putPair(i, j, new ArrayList<Person>());
+			}
+		}
+		return newPersonLand;
+	}
+	
 
 }

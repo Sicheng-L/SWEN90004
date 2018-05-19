@@ -4,7 +4,6 @@ import java.util.Hashtable;
 public class Land<T> extends Hashtable<Tuple, T>{
 	
 	public Land() {
-		
 	}
 	
 	public T getValue(int x, int y){
