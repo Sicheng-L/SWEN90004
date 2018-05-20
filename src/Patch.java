@@ -12,10 +12,35 @@ public class Patch {
 	
 	private int MAX_GRAIN;
 	
+	// a double to store diffusion of grain
+	// will be rounded to integer after diffusion
+	private double diffGrain;
 	
 	public Patch() {
 		this.currentGrain = 0;
 		this.MAX_GRAIN = 0;
+		this.diffGrain = 0;
+	}
+	
+	/*
+	 * Get the diffusion grain
+	 */
+	public double getDiffGrain() {
+		return diffGrain;
+	}
+	
+	/*
+	 * Diffuse process
+	 */
+	public void diff() {
+		diffGrain -= diffGrain * Params.DIFF_RATE;
+	}
+	
+	/*
+	 * Get grain from the diffusion
+	 */
+	public void diffed(double newGrain) {
+		diffGrain += newGrain;
 	}
 	
 	/*

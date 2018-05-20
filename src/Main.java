@@ -10,8 +10,12 @@ public class Main {
 		
 		Controller c = new Controller(personLand, patchLand);
 		
+		c.init();
+		
+		int index = 0;
 		while(true) {
-			c.tick();
+			index ++;
+			c.tick(index);
 		}
 		
 

@@ -30,9 +30,9 @@ public class Person {
 	 * Get the class of the person
 	 */
 	public String getClass(int maxWealth) {
-		if(wealth <= maxWealth / 3) {
+		if(wealth <= maxWealth / 3.0) {
 			return "Low";
-		} else if (wealth <= (maxWealth * 2 / 3)){
+		} else if (wealth <= ((double)maxWealth * 2.0 / 3.0)){
 			return "Middle";
 		} else {
 			return "High";
