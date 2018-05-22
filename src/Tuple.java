@@ -5,7 +5,7 @@ import java.util.Arrays;
  * x - horizontal coordinate
  * y - vertical coordinate
  * 
- * @author SICHENG
+ * @author JIACHENG
  *
  */
 
@@ -28,7 +28,7 @@ public class Tuple {
 	}
 	
 	@Override
-    public int hashCode () {
+    public int hashCode() {
 		int[] hash= new int[2];
 		hash[0] = x;
 		hash[1] = y;
@@ -36,7 +36,7 @@ public class Tuple {
     }
 
     @Override
-    public boolean equals (Object other) {
+    public boolean equals(Object other) {
         if(!(other instanceof Tuple)) return false;
         Tuple tupleo = (Tuple) other;
         return this.x == tupleo.getX() && this.y == tupleo.getY();

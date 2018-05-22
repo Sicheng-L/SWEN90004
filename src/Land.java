@@ -1,6 +1,14 @@
-import java.util.ArrayList;
 import java.util.Hashtable;
 
+/**
+ * Class representing the land
+ * Use Hashtable
+ * key: Tuple(the coordinate), value: either ArrayList<Person> or Patch
+ * 
+ * @author SICHENG
+ *
+ * @param <T>
+ */
 public class Land<T> extends Hashtable<Tuple, T>{
 	
 	public Land() {

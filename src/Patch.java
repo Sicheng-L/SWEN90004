@@ -2,7 +2,7 @@
  * a class representing the "patch"
  * the patch can self-grow grains
  * 
- * @author SICHENG
+ * @author JIACHENG
  *
  */
 

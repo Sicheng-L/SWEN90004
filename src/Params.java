@@ -10,10 +10,22 @@ import java.util.Random;
  */
 
 public class Params {
+
+	//Extension: the percentage of the wealth of its parent that it can inherit
+	public final static double PERCENT_INHERIT = 0.9;
 	
 	// number of people on the land - range from 2-1000
-	public final static int NUM_PEOPLE = 1000;
-	
+	public final static int NUM_PEOPLE = 250;
+
+	// max metabolism of people - the number of grain they eat at each tick
+	// range from 1-25
+	public final static int METABOLISM_MAX = 15;
+
+	// percentage of best land - land that has
+	// range from 5%-25%
+	public final static double PERCENT_BEST_LAND = 0.1;
+
+
 	// minimum percentage of each class when initializing
 	public final static double CLASS_THRESHOLD = 0.25; 
 
@@ -22,10 +34,6 @@ public class Params {
 	// range from 1-15
 	public final static int MAX_VISION = 5;
 	
-	// max metabolism of people - the number of grain they eat at each tick
-	// range from 1-25
-	public final static int METABOLISM_MAX = 25;
-	
 	// max life expectancy - the number of ticks one person can live
 	// range from 1-100
 	public final static int LIFE_EXPECTANCY_MAX = 83;
@@ -33,10 +41,6 @@ public class Params {
 	// min life expectancy
 	// range from 1-100
 	public final static int LIFE_EXPECTANCY_MIN = 1;
-	
-	// percentage of best land - land that has 
-	// range from 5%-25%
-	public final static double PERCENT_BEST_LAND = 0.05;
 	
 	// the maximum number of grains a patch can hold
 	public final static int MAX_GRAIN = 50;
@@ -87,6 +91,13 @@ public class Params {
 	public static int randomWealth(int metabolism) {
 		Random random = new Random();
 		return metabolism + random.nextInt(50);
+	}
+
+
+	//Extension: inherit a percentage of the wealth
+	public static int inheritWealth(int metabolism, int legacy) {
+
+		return (int)(metabolism + legacy*PERCENT_INHERIT);
 	}
 	
 	/*

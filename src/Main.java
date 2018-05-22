@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+/**
+ * Main Class - to initiate the program
+ * 
+ * @author SICHENG
+ *
+ */
 public class Main {
 
 	public static void main(String[] args) {
