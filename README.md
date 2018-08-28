@@ -60,8 +60,3 @@ Tick80: Poor:222, Middle:25, Rich:3.
 Sicheng Liu
 sichengl4@student.unimelb.edu.au
 ```
-
-```
-Jiacheng Sun
-jiachengs@student.unimelb.edu.au
-```
